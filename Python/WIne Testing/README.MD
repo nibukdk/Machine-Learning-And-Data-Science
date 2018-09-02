@@ -1,3 +1,0 @@
-# Redwine Quality Testing
-    #Contents
-    
