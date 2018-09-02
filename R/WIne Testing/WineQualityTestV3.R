@@ -49,19 +49,29 @@ test_set[, -12] <- scale(test_set[, -12])
 
 
 ##Application of Grid Search
-folds <- ? createFolds(train_set$category, k = 10)
+folds <- createFolds(train_set$category, k = 10)
 cv <- lapply(folds, function(x) {
   train_fold <- train_set[-x, ]
   test_fold <- train_set[x, ]
   classifer <-  svm(
     formula = category ~ .,
-    data = tain_fold,
+    data = train_fold,
     type = "C-classification",
     kernel = "radial"
   )
-  y_pred <- predict(classifer, test_fold[, 12])
-  cm <- confusionMatrix(test_fold$category, y_pred)
+  y_pred <- predict(classifer, test_fold)
+  cm <- table(test_fold$category,y_pred)
+  accuracy <- (cm[1,1]+cm[2,2])/(cm[1,1]+cm[1,2]+cm[2,1]+cm[2,2])
   
-  return(cm)
+  return(accuracy)
   
 })
+
+accuracy<- mean(as.numeric(cv))
+
+#Hence accuracy of this Algoeithm is 97% 
+
+
+
+
+
